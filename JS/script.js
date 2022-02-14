@@ -16,10 +16,12 @@ for (let i = 0 ; i < cells.length ; i++) {
             removeFromAvalible(i);
             checkWinner();
             
-            setTimeout(() => {
-                competitorTurn();
-                checkWinner();
-            }, 500);
+            if (winner === 0) {
+                setTimeout(() => {
+                    competitorTurn();
+                    checkWinner();
+                }, 500);
+            }
         }
     })
 }
@@ -156,6 +158,7 @@ document.getElementById("again").addEventListener('click', function(event) {
 
 function reset() {
     availableCells = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+    winner = 0;
 
     for (let i = 0 ; i < cells.length ; i++) {
         cells[i].innerHTML = `<p>?</p>`;
