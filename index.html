@@ -6,11 +6,24 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=PT+Sans+Caption&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/all.min.css">
     <link rel="stylesheet" href="CSS/style.css">
 </head>
 <body>
     <main>
         <div class="board">
+            <div id="play-window">
+                <div>
+                    <h1>Tic-Tac-Toe</h1>
+                    <p>
+                        <span id="x-symbole">X</span>
+                        <span id="o-symbole">O</span>
+                    </p>
+                    <button id="play"><i class="fas fa-play"> Play</i></button>
+                </div>
+            </div>
+
             <div class="inner-board">
                 <div class="row">
                     <div class="cell"><p>?</p></div>
@@ -28,6 +41,12 @@
                     <div class="cell"><p>?</p></div>
                     <div class="cell"><p>?</p></div>
                     <div class="cell"><p>?</p></div>
+                </div>
+            </div>
+            <div id="playagain-window">
+                <div>
+                    <p id="result"></p>
+                    <button id="again"><i class="fas fa-undo"> Play again?</i></button>
                 </div>
             </div>
         </div>

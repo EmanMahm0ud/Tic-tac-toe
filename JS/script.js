@@ -114,5 +114,50 @@ function removeFromAvalible(value) {
 }
 
 function endGame() {
-    // TODO display result
+    let playagainWindow = document.getElementById("playagain-window");
+    playagainWindow.style.visibility = "visible";
+
+    if (winner === 0) {
+        document.getElementById("result").innerText = "Draw!";
+    } else if (winner === 1) {
+        document.getElementById("result").innerText = "Yahoo!";
+    } else if (winner === -1) {
+        document.getElementById("result").innerText = "Oh..oh!";
+    }
+}
+
+let xSymbole = document.getElementById("x-symbole");
+let oSymbole = document.getElementById("o-symbole");
+
+xSymbole.addEventListener('click', function(event) {
+    xSymbole.style.boxShadow = "0 0 10px #F4AAB9";
+    oSymbole.style.boxShadow = "none";
+    player = "X";
+    competitor = "O";
+});
+
+oSymbole.addEventListener('click', function(event) {
+    oSymbole.style.boxShadow = "0 0 10px #F4AAB9";
+    xSymbole.style.boxShadow = "none";
+    player = "O";
+    competitor = "X";
+});
+
+document.getElementById("play").addEventListener('click', function(event) {
+    let playWindow = document.getElementById("play-window");
+    playWindow.style.visibility = "hidden";
+});
+
+document.getElementById("again").addEventListener('click', function(event) {
+    let playagainWindow = document.getElementById("playagain-window");
+    playagainWindow.style.visibility = "hidden";
+    reset();
+});
+
+function reset() {
+    availableCells = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+
+    for (let i = 0 ; i < cells.length ; i++) {
+        cells[i].innerHTML = `<p>?</p>`;
+    }
 }
