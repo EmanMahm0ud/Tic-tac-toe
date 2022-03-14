@@ -9,19 +9,17 @@ let cells = document.querySelectorAll(".row .cell");
 
 for (let i = 0 ; i < cells.length ; i++) {
     cells[i].addEventListener('click', function(event) {
-        let x = event.target.innerText;
+        let cell = event.target.innerText;
 
-        if (x === "?") {
+        if (cell === "?") {
             cells[i].innerHTML = `<p>${player}</p>`;
             removeFromAvalible(i);
             checkWinner();
             
-            if (winner === 0) {
-                setTimeout(() => {
-                    competitorTurn();
-                    checkWinner();
-                }, 500);
-            }
+            setTimeout(() => {
+                competitorTurn();
+                checkWinner();
+            }, 500);
         }
     })
 }
@@ -39,8 +37,7 @@ function checkWinner() {
             } else if (cells[a].innerText === competitor) {
                 winner = -1;
             }
-            endGame();
-            return 1;
+            setTimeout(() =>{endGame();}, 500);
         }
     }
     return 0;
@@ -128,6 +125,17 @@ function endGame() {
     }
 }
 
+function reset() {
+    availableCells = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+    winner = 0;
+
+    for (let i = 0 ; i < cells.length ; i++) {
+        cells[i].innerHTML = `<p>?</p>`;
+    }
+}
+
+/* -------- buttons actions -------- */
+
 let xSymbole = document.getElementById("x-symbole");
 let oSymbole = document.getElementById("o-symbole");
 
@@ -155,12 +163,3 @@ document.getElementById("again").addEventListener('click', function(event) {
     playagainWindow.style.visibility = "hidden";
     reset();
 });
-
-function reset() {
-    availableCells = [0, 1, 2, 3, 4, 5, 6, 7, 8];
-    winner = 0;
-
-    for (let i = 0 ; i < cells.length ; i++) {
-        cells[i].innerHTML = `<p>?</p>`;
-    }
-}
