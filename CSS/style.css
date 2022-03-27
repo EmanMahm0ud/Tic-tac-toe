@@ -137,3 +137,16 @@ button:hover {
 button i {
     font-size: 16pt;
 }
+
+#line {
+    width: 0px;
+    height: 10px;
+    background-color: #F4AAB9;
+    border-radius: 5px;
+    transition: width 1s;
+    transform: rotate(90deg);
+    transform-origin: center left;
+    position: absolute;
+    top: 25px;
+    left: 325px;
+}

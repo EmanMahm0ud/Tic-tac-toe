@@ -1,12 +1,23 @@
-let winCases = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [1, 4, 7], [2, 5, 8], [3, 6, 9], [1, 5, 9], [3, 5, 7]];
-let availableCells = [0, 1, 2, 3, 4, 5, 6, 7, 8];
-let player = "X";
-let competitor = "O";
-let winner = 0; // 0 draw, 1 player won, -1 compatitor won
-let flag = false;
+/* ---- Global variables initialization ---- */
 
+// if the player reaches one of these cases, he'll win
+const winCases = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [1, 4, 7], [2, 5, 8], [3, 6, 9], [1, 5, 9], [3, 5, 7]];
+let availableCells = [0, 1, 2, 3, 4, 5, 6, 7, 8];  // all current possible cells
+let player = "X";      // default value 'X' for the player
+let competitor = "O";  // default value 'O' for the competitor
+let winner = 0;        // 0 draw, 1 player won, -1 compatitor won
 let cells = document.querySelectorAll(".row .cell");
 
+// the position of the line to make animation 
+// values: [width, top, left, transform] 
+const linePostions = [["345px", "70px", "25px", "rotate(0deg)"], ["345px", "196px", "25px", "rotate(0deg)"], ["345px", "322px", "25px", "rotate(0deg)"],
+                      ["345px", "75px", "25px", "rotate(90deg)"], ["345px", "25px", "200px", "rotate(90deg)"], ["345px", "25px", "325px", "rotate(90deg)"],
+                      ["470px", "30px", "30px",  "rotate(45deg)"], ["470px", "360px", "30px",  "rotate(-45deg)"]];
+
+/* ---- End of initializing global variables ---- */
+/* ---------------------------------------------- */
+
+// looping on all cells to listen for mouse click
 for (let i = 0 ; i < cells.length ; i++) {
     cells[i].addEventListener('click', function(event) {
         let cell = event.target.innerText;
@@ -14,15 +25,19 @@ for (let i = 0 ; i < cells.length ; i++) {
         if (cell === "?") {
             cells[i].innerHTML = `<p>${player}</p>`;
             removeFromAvalible(i);
-            checkWinner();
-            
-            setTimeout(() => {
-                competitorTurn();
-                checkWinner();
-            }, 500);
+
+            // if no winner then the competitor plays
+            if (checkWinner() === 0) {
+                setTimeout(() => {
+                    competitorTurn();
+                    checkWinner();
+                }, 500);
+            }
         }
     })
 }
+
+/* ------ functions ------ */
 
 function checkWinner() {
     for (let i = 0 ; i < winCases.length ; i++) {
@@ -37,7 +52,9 @@ function checkWinner() {
             } else if (cells[a].innerText === competitor) {
                 winner = -1;
             }
-            setTimeout(() =>{endGame();}, 500);
+            lineAnimation(i)
+            setTimeout(() => {endGame();}, 2000);
+            return 1;
         }
     }
     return 0;
@@ -105,6 +122,7 @@ function competitorTurn() {
     }
 }
 
+// remove the index of the cell that is no longer be available 
 function removeFromAvalible(value) {
     let index = availableCells.indexOf(value);
     if (index !== -1) {
@@ -132,6 +150,20 @@ function reset() {
     for (let i = 0 ; i < cells.length ; i++) {
         cells[i].innerHTML = `<p>?</p>`;
     }
+
+    let line = document.getElementById("line");
+    line.style.opacity = "0";
+    line.style.width = "0";
+}
+
+
+function lineAnimation(i) {
+    let line = document.getElementById("line");
+    line.style.opacity = "1";
+    line.style.width = linePostions[i][0];
+    line.style.top = linePostions[i][1];
+    line.style.left = linePostions[i][2];
+    line.style.transform = linePostions[i][3];
 }
 
 /* -------- buttons actions -------- */
